@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users",
+    "pages",
+    "auths",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = "conf.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -130,3 +132,10 @@ AUTH_USER_MODEL = "users.CustomUser"
 # Email
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+# Authentication
+
+LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = "login"
+LOGOUT_REDIRECT_URL = "login"

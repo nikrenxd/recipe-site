@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method='post'>
+        {% csrf_token %}
+        {% for field in form %}
+            <p>{{ field.label }}</p>
+            <p>{{ field.errors }}</p>
+            <p>{{ field }}</p>
+        {% endfor %}
+        <input type="submit" value="Log In">
+    </form>
+{% endblock content %}
