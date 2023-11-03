@@ -49,23 +49,37 @@ class ConfirmEmailView(TemplateView):
 
         timestamp = base36_to_int(token.split("-")[0])
         timestamp_minutes = datetime.fromtimestamp(timestamp).minute
-        now_time = datetime.now().minute
+        now_time_minutes = datetime.now().minute
 
         try:
             user = CustomUser.objects.get(id=user_id)
         except CustomUser.DoesNotExist:
             return redirect("home")
 
-        if (now_time - timestamp_minutes) < 5 and user is not None:
-            if default_token_generator.check_token(user, token):
+        token_used = self.request.session.get("token_used", False)
+
+        if (now_time_minutes - timestamp_minutes) > 3:
+            if user is not None and not user.is_active:
+                user.delete()
+                return redirect("expired")
+
+        if default_token_generator.check_token(user, token) and not token_used:
+            if not user.is_active:
+                self.request.session["token_used"] = True
+                del self.request.session["token_used"]
                 user.is_active = True
                 user.save()
-        else:
-            user.delete()
-            return redirect("expired")
+            else:
+                self.request.session["token_used"] = True
+                del self.request.session["token_used"]
+                return redirect("used")
 
         return super().get(request, *args, **kwargs)
 
 
 class ExpiredEmailView(TemplateView):
     template_name = "confirmation/token_expired.html"
+
+
+class UsedTokenView(TemplateView):
+    template_name = "confirmation/token_used.html"

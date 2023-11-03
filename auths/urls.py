@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import SignupView, ConfirmEmailView, ExpiredEmailView
+from .views import SignupView, ConfirmEmailView, ExpiredEmailView, UsedTokenView
 
 urlpatterns = [
     path("signup/", SignupView.as_view(), name="signup"),
@@ -12,4 +12,5 @@ urlpatterns = [
         name="activate",
     ),
     path("activate/expired/", ExpiredEmailView.as_view(), name="expired"),
+    path("activate/used/", UsedTokenView.as_view(), name="used"),
 ]
