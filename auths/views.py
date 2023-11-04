@@ -1,11 +1,13 @@
-from datetime import datetime, timedelta
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
-from django.core.mail import send_mail
-from django.utils.http import base36_to_int
-from django.contrib.auth.tokens import default_token_generator
 
+from .services import (
+    create_token_and_send_email,
+    token_verification,
+    token_expired,
+    get_timestamp_difference,
+)
 from users.forms import CustomUserCreationForm
 from users.models import CustomUser
 
@@ -19,23 +21,7 @@ class SignupView(FormView):
     def form_valid(self, form):
         form.instance.is_active = False
         form.save()
-        token = default_token_generator.make_token(form.instance)
-        activation_link = self.request.build_absolute_uri(
-            reverse_lazy(
-                "activate",
-                kwargs={
-                    "id": form.instance.id,
-                    "token": token,
-                },
-            )
-        )
-        send_mail(
-            "Account activation",
-            f"Here is your link\n{activation_link}",
-            "admin@mail.com",
-            [form.instance.email],
-        )
-
+        create_token_and_send_email(self.request, form)
         return super().form_valid(form)
 
 
@@ -43,36 +29,15 @@ class ConfirmEmailView(TemplateView):
     template_name = "confirmation/confirm_success_page.html"
 
     def get(self, request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, id=kwargs["id"])
         token = kwargs["token"]
-        user_id = kwargs["id"]
-        user = None
+        expired_minutes = get_timestamp_difference(token)
 
-        timestamp = base36_to_int(token.split("-")[0])
-        timestamp_minutes = datetime.fromtimestamp(timestamp).minute
-        now_time_minutes = datetime.now().minute
+        if token_expired(user, expired_minutes):
+            return redirect("expired")
 
-        try:
-            user = CustomUser.objects.get(id=user_id)
-        except CustomUser.DoesNotExist:
-            return redirect("home")
-
-        token_used = self.request.session.get("token_used", False)
-
-        if (now_time_minutes - timestamp_minutes) > 3:
-            if user is not None and not user.is_active:
-                user.delete()
-                return redirect("expired")
-
-        if default_token_generator.check_token(user, token) and not token_used:
-            if not user.is_active:
-                self.request.session["token_used"] = True
-                del self.request.session["token_used"]
-                user.is_active = True
-                user.save()
-            else:
-                self.request.session["token_used"] = True
-                del self.request.session["token_used"]
-                return redirect("used")
+        if not token_verification(self.request, user, token):
+            return redirect("used")
 
         return super().get(request, *args, **kwargs)
 

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "users",
     "pages",
     "auths",
+    "recipes",
 ]
 
 MIDDLEWARE = [
