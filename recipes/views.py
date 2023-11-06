@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
 
-# Create your views here.
+from .models import Recipe
+
+
+class RecipeDetailView(DetailView):
+    model = Recipe
+    slug_url_kwarg = "recipe_slug"
+    template_name = "recipes/recipe_detail.html"

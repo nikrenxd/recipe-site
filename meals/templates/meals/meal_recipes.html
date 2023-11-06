@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Meal Recipes{% endblock title %}
+
+{% block content %}
+    <div class="meals-recipe-grid">
+        {% for meal_recipe in meal_recipes  %}
+            <a href="{% url 'recipe-detail' meal_recipe.slug %}">{{ meal_recipe.title }}</a> 
+        {% endfor %}
+    </div>
+
+{% endblock content %}
