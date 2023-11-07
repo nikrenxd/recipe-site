@@ -30,6 +30,15 @@ class Recipe(models.Model):
         self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse(
+            "recipe-detail",
+            kwargs={
+                "meal_slug": self.meal.slug,
+                "recipe_slug": self.slug,
+            },
+        )
+
 
 class Ingredient(models.Model):
     ingredient = models.CharField(max_length=220)

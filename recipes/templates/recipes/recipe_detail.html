@@ -3,7 +3,27 @@
 {% block title %}{{ recipe.title }}{% endblock title %}
 
 {% block content %}
-
-{{ recipe.title }}
+    <div class="recipe-header">
+        <h1>{{ recipe.title }}</h1>
+        <p class="recipe-description">{{ recipe.description }}</p>
+    </div>
+    <div class="recipe-body">
+        <div class="recipe-image">
+            <img src="{{ recipe.recipe_image.url }}" alt="">
+        </div>
+        <h2>Ingredients</h2>
+        {% for ingredient in recipe.ingredient_set.all %}
+            <ul>
+                <li>{{ ingredient.ingredient }}</li>
+            </ul>
+        {% endfor %}
+        <h2>Steps</h2>
+        {% for step in recipe.instruction_set.all  %}
+            <p><strong>Step {{ forloop.counter }}</strong></p>
+            <p class="step">
+                {{ step.step }}
+            </p>
+        {% endfor %}
+    </div>
 
 {% endblock content %}

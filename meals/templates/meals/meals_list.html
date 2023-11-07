@@ -6,8 +6,11 @@
     <div class="meals-grid">
         {% for meal in meals %}
             <div class="meal-type">
-                <a href="{% url 'meal-recipes' meal.slug %}">
-                    <img class="meal-image" src="{{ meal.meal_image.url }}" alt="No meal img">
+                <img class="meal-image" src="{{ meal.meal_image.url }}" alt="No meal img">
+                <a class="meal-link" href="{% url 'meal-recipes' meal.slug %}">
+                    <div class="meal-overlay">
+                        {{ meal.type }}
+                    </div>
                 </a>
             </div>
         {% endfor %}

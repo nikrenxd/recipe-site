@@ -1,10 +1,17 @@
 {% load static %}
 <header class="header">
-    <div class="header-top">
-        <img src="{% static 'images/header/logo.svg' %}" alt="">
+    <nav class="header-top">
+        <div class="main-section">
+            <img src="{% static 'images/header/logo.svg' %}" alt="">
+            <a href="{% url 'home' %}">HOME</a>
+            <a href="{% url 'meals-list' %}">MEALS</a>
+            <a href="#">NEWS</a>
+            <a href="#">CUISINES</a>
+            <a href="#">ABOUT US</a>
+        </div>
         <div class="right-section">
             <form class="search-form" action="#">
-                <input type="text" placeholder="Search">
+                <input class="search" type="text" placeholder="Search">
                 <button class="search-button">
                     <img src="{% static 'images/header/search.svg' %}" alt="">
                 </button>
@@ -20,15 +27,6 @@
                     <a href="http://127.0.0.1:8000/admin/">Admin</a>
                 {% endif %}
             </div>
-        </div>
-    </div>
-    <nav class="navbar">
-        <div class="main-section">
-            <a href="{% url 'home' %}">HOME</a>
-            <a href="{% url 'meals-list' %}">MEALS</a>
-            <a href="#">NEWS</a>
-            <a href="#">CUISINES</a>
-            <a href="#">ABOUT US</a>
         </div>
     </nav>
 </header>

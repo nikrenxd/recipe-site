@@ -2,6 +2,10 @@ a {
     font-family: Arial;
 }
 
+.header {
+    margin-bottom: 30px;
+}
+
 /* Header top */
 
 .header-top {
@@ -53,16 +57,24 @@ a {
 
 /* Navbar */
 
-.navbar a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
+.main-section {
+    display: flex;
+    align-items: center;
 }
 
-.header-top a:hover,
-.navbar a:hover {
+.main-section a {
+    font-weight: 700;
+    margin-right: 20px;
+    letter-spacing: 2px;
+}
+
+.header-top a:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: orange;
 }
 
+
+.hidden {
+    display: none;
+}

@@ -5,7 +5,15 @@
 {% block content %}
     <div class="meals-recipe-grid">
         {% for meal_recipe in meal_recipes  %}
-            <a href="{% url 'recipe-detail' meal_recipe.slug %}">{{ meal_recipe.title }}</a> 
+            <div class="meal-recipe-card">
+                <a href="{{ meal_recipe.get_absolute_url }}">
+                    <img class="meal-card-image" src="{{ meal_recipe.recipe_image.url }}">
+                    <div class="meal-card-body">
+                        <p class="meal-type">{{ meal_recipe.meal.type | upper }}</p>
+                        <p class="meal-title">{{ meal_recipe.title | title }}</p>
+                    </div>
+                </a> 
+            </div> 
         {% endfor %}
     </div>
 

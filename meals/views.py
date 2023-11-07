@@ -19,3 +19,8 @@ class MealRecipesListView(ListView):
         meal = get_object_or_404(Meal, slug=meal_slug)
         qs = meal.recipe_set.filter(meal__slug=meal_slug)
         return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["meal_slug"] = self.kwargs["meal_slug"]
+        return context
