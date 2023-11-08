@@ -7,9 +7,12 @@
         {% for meal_recipe in meal_recipes  %}
             <div class="meal-recipe-card">
                 <a href="{{ meal_recipe.get_absolute_url }}">
-                    <img class="meal-card-image" src="{{ meal_recipe.recipe_image.url }}">
+                    <div class="meal-card-head">
+                        <img class="meal-card-image" src="{{ meal_recipe.recipe_image.url }}">
+                    </div>
+                    
                     <div class="meal-card-body">
-                        <p class="meal-type">{{ meal_recipe.meal.type | upper }}</p>
+                        <p class="meal-type-name">{{ meal_recipe.meal.type | upper }}</p>
                         <p class="meal-title">{{ meal_recipe.title | title }}</p>
                     </div>
                 </a> 

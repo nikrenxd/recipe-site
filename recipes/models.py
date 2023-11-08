@@ -1,8 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.conf import settings
 
-from users.models import CustomUser
 from meals.models import Meal
 
 
@@ -12,7 +12,7 @@ class Recipe(models.Model):
     recipe_image = models.ImageField(upload_to="images/recipes/")
     slug = models.SlugField()
 
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

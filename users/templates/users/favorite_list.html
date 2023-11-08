@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock  %}
+
+{% block content %}
+
+<h1>All Saved Recipes</h1>
+
+
+{% if favorites %}
+    {{ amount }}
+{% else %}
+    <p>You haven't saved anything yet.</p>
+{% endif %}
+
+{% for favorite in favorites  %}
+    <p>{{ favorite.title }}</p>
+{% endfor %}
+
+{% endblock content %}

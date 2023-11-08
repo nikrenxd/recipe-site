@@ -19,6 +19,8 @@
             
             <div class="authentication">   
                 {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}">My Profile</a>
+                    <a href="{% url 'favorite' %}">Saved Recipes</a>
                     <a href="{% url 'logout' %}">Log Out</a>
                 {% else %}
                     <a href="{% url 'login' %}">Log In</a>
