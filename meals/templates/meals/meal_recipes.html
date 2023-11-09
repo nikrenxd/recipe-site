@@ -9,6 +9,14 @@
                 <a href="{{ meal_recipe.get_absolute_url }}">
                     <div class="meal-card-head">
                         <img class="meal-card-image" src="{{ meal_recipe.recipe_image.url }}">
+                        <a href="{% url 'recipe-favorite' meal_slug meal_recipe.slug meal_recipe.id %}">
+                            {% if meal_recipe in user.favorite_recipes.all %}
+                                <button class="btn-favorite">Remove from favorite</button>
+                            {% else %}
+                                <button class="btn-favorite">Add to favorite</button>
+                            {% endif %}
+                            
+                        </a>
                     </div>
                     
                     <div class="meal-card-body">

@@ -9,7 +9,11 @@ class CustomUser(AbstractUser):
     email = models.EmailField(max_length=155, unique=True)
     name = models.CharField(max_length=100, blank=True, null=True)
 
-    favorite_recipes = models.ManyToManyField(Recipe, blank=True)
+    favorite_recipes = models.ManyToManyField(
+        Recipe,
+        blank=True,
+        related_name="users",
+    )
 
     username = None
     first_name = None
