@@ -1,0 +1,9 @@
+<style>
+    .add-btn.htmx-swapping {
+        display: none;
+    }
+</style>
+
+<input id="add" class="add-btn" type="submit" value="Add to favorite"
+hx-swap="outerHTML" hx-get="{% url 'recipe-favorite' meal_slug recipe.slug recipe.id %}">
+    

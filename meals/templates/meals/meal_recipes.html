@@ -8,23 +8,24 @@
             <div class="meal-recipe-card">
                 <a href="{{ meal_recipe.get_absolute_url }}">
                     <div class="meal-card-head">
-                        <img class="meal-card-image" src="{{ meal_recipe.recipe_image.url }}">
-                        <a href="{% url 'recipe-favorite' meal_slug meal_recipe.slug meal_recipe.id %}">
-                            {% if meal_recipe in user.favorite_recipes.all %}
-                                <button class="btn-favorite">Remove from favorite</button>
-                            {% else %}
-                                <button class="btn-favorite">Add to favorite</button>
-                            {% endif %}
-                            
-                        </a>
+                        <img class="meal-card-image" src="{{ meal_recipe.recipe_image.url }}"> 
                     </div>
                     
                     <div class="meal-card-body">
                         <p class="meal-type-name">{{ meal_recipe.meal.type | upper }}</p>
                         <p class="meal-title">{{ meal_recipe.title | title }}</p>
                     </div>
-                </a> 
+                </a>
+                {% if meal_recipe in user.favorite_recipes.all %}
+                    <input type="button" class="btn-favorite" value="Remove from favorite" hx-swap="outerHTML" 
+                    hx-get="{% url 'recipe-favorite' meal_slug meal_recipe.slug meal_recipe.id %}">
+                {% else%}
+                    <input type="button" class="btn-favorite" value="Add to favorite" hx-swap="outerHTML" 
+                    hx-get="{% url 'recipe-favorite' meal_slug meal_recipe.slug meal_recipe.id %}">
+                {% endif %}
+                
             </div> 
+            
         {% endfor %}
     </div>
 

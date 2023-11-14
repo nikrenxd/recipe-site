@@ -25,5 +25,22 @@
             </p>
         {% endfor %}
     </div>
+    <div class="comments-section">
+        <h1>Comments</h1>
+        {% if user.is_authenticated %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <p>{{ field }}</p>
+                {% endfor %}
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+        <hr>
+        {% for comment in recipe.comment_set.all  %}
+            <h4>{{ comment.user.email }} - created at {{ comment.created }}</h4>
+            <p>{{ comment.content }}</p>
+        {% endfor %}
+    </div>
 
 {% endblock content %}

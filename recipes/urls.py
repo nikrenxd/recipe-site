@@ -1,16 +1,11 @@
 from django.urls import path
 
-from .views import RecipeDetailView, RecipeFavoriteView
+from .views import RecipeView
 
 urlpatterns = [
     path(
         "<slug:meal_slug>/<slug:recipe_slug>/",
-        RecipeDetailView.as_view(),
+        RecipeView.as_view(),
         name="recipe-detail",
-    ),
-    path(
-        "add-to-favorite/<slug:meal_slug>/<slug:recipe_slug>/<int:pk>/",
-        RecipeFavoriteView.as_view(),
-        name="recipe-favorite",
     ),
 ]

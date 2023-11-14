@@ -16,11 +16,15 @@
 }
 
 .btn-favorite {
-    position: absolute;
+    /* position: absolute;
     top: 0;
-    right: 0;
+    right: 0; */
     border: none;
     cursor: pointer;
+}
+
+.btn-favorite.htmx-swapping {
+    display: none;
 }
 
 .meal-recipe-card a {

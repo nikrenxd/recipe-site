@@ -2,7 +2,6 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
 
 from .forms import ProfileEditForm
 
@@ -17,7 +16,7 @@ class ProfileFormView(LoginRequiredMixin, FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        user = get_object_or_404(CustomUser, email=self.request.user.email)
+        user = self.request.user
 
         kwargs["instance"] = user
 
